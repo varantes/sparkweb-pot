@@ -1,40 +1,39 @@
 Configuration:
   status: warn
+  monitorInterval: 1
 
   appenders:
     Console:
-      name: LogToConsole
-      PatternLayout:
-        Pattern: "[%-5level] %d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %c{1.} - %msg [%M() %F:%L]%n"
-
-    #File:
-    #  name: File
-    #  fileName: logs/app.log
-    #  PatternLayout:
-    #    Pattern: "%d %p %C{1.} [%t] %m%n"
+      - name: LogToConsole
+        PatternLayout:
+          Pattern: "[%-5level] %d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %c{1.} - %msg [%M() %F:%L]%n"
 
     RollingFile:
-      - name: LogToRollingFile
-        fileName: logs/app.log
+      - name: JSON
+        fileName: logs/eventos.json
         filePattern: "logs/$${date:yyyy-MM}/app-%d{MM-dd-yyyy}-%i.log.gz"
-        PatternLayout:
-          pattern: "[%-5level] %d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %c{1} - %msg%n"
         Policies:
           SizeBasedTriggeringPolicy:
             size: 10MB
         DefaultRollOverStrategy:
-          max: 5
+          max: 1
+        JsonTemplateLayout:
+          eventTemplateUri: classpath:neto-layout.json
+          locationInfoEnabled: true
+          eventTemplateAdditionalField:
+            - key: Titulo
+              value: Sparkweb POT
 
   Loggers:
-    logger:
+    asynclogger:
       - name: br.com.neto
         level: trace
         additivity: false
         AppenderRef:
           - ref: LogToConsole
-          - ref: LogToRollingFile
+          - ref: JSON
 
-    Root:
+    AsyncRoot:
       level: info
       AppenderRef:
         ref: LogToConsole

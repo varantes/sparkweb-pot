@@ -1,0 +1,65 @@
+{
+  "@timestamp": {
+    "$resolver": "timestamp",
+    "pattern": {
+      "format": "yyyy-MM-dd'T'HH:mm:ss.SSS",
+      "timeZone": "America/Sao_Paulo"
+    }
+  },
+  "thread": {
+    "$resolver": "thread",
+    "field": "name"
+  },
+  "level": {
+    "$resolver": "level",
+    "field": "name"
+  },
+  "TESTE": "Apenas um teste 1",
+  "event": {
+    "$resolver": "message",
+    "stringified": false
+  },
+  "thrown": {
+    "message": {
+      "$resolver": "exception",
+      "field": "message"
+    },
+    "name": {
+      "$resolver": "exception",
+      "field": "className"
+    },
+    "extendedStackTrace": {
+      "$resolver": "exception",
+      "field": "stackTrace"
+    }
+  },
+  "contextStack": {
+    "$resolver": "ndc"
+  },
+  "threadId": {
+    "$resolver": "thread",
+    "field": "id"
+  },
+  "threadPriority": {
+    "$resolver": "thread",
+    "field": "priority"
+  },
+  "source": {
+    "class": {
+      "$resolver": "source",
+      "field": "className"
+    },
+    "method": {
+      "$resolver": "source",
+      "field": "methodName"
+    },
+    "file": {
+      "$resolver": "source",
+      "field": "fileName"
+    },
+    "line": {
+      "$resolver": "source",
+      "field": "lineNumber"
+    }
+  }
+}

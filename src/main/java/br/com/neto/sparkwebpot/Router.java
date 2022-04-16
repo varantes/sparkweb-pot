@@ -5,6 +5,8 @@ import com.google.inject.Inject;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import java.util.Map;
+
 import static spark.Spark.*;
 
 public class Router {
@@ -20,11 +22,18 @@ public class Router {
     }
 
     public void configure() {
-        before("/*", (req, res) -> log.info("[{}] {}: {}", this, req.requestMethod(), req.uri()));
+        before("/*", (req, res) -> log.info("{}: {}", req.requestMethod(), req.uri()));
 
         get("/", (req, res) -> "Working" );
         get("/person", (req, res) -> mapper.writeValueAsString(oneService.getPerson()) );
+        get("/hi", (req, res) -> oneService.sayHi());
 
-        after("/*", (req, res) -> log.info(res.body()) );
+        after("/*", (req, res) -> {
+            try {
+                log.info(mapper.readValue(res.body(), Map.class));
+            } catch (Exception e) {
+                log.info(res.body());
+            }
+        });
     }
 }

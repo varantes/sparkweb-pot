@@ -1,10 +1,14 @@
 package br.com.neto.sparkwebpot;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import spark.utils.StringUtils;
 
 import java.util.List;
 
-public record OneDTO(String name, int age, List<OneDTO> parents) {
+public record OneDTO(String name,
+                     int age,
+                     @JsonInclude(JsonInclude.Include.NON_EMPTY)
+                     List<OneDTO> parents) {
     public OneDTO {
         if (StringUtils.isBlank(name)) throw new IllegalArgumentException("name must not be empty");
         if (age < 1) throw new IllegalArgumentException("age must be greater than 0");
