@@ -19,7 +19,8 @@ dependencies {
     implementation 'org.apache.logging.log4j:log4j-layout-template-json:2.17.2'
     implementation 'org.apache.logging.log4j:log4j-slf4j-impl:2.17.2' // O spark precisa dessa lib pra não emitir warning
 
-    implementation 'org.apache.httpcomponents:httpclient:3.5.1'
+    implementation 'org.apache.httpcomponents:httpclient:4.5.13'
+
 
     /**
      * As duas libs jackson são necessárias para o Log4J2 ler o yaml
