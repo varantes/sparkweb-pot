@@ -25,8 +25,8 @@ dependencies {
     /**
      * As duas libs jackson são necessárias para o Log4J2 ler o yaml
      */
-    implementation 'com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:2.13.2'
-    implementation 'com.fasterxml.jackson.core:jackson-databind:2.13.2.2'
+    implementation 'com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:2.13.3'
+    implementation 'com.fasterxml.jackson.core:jackson-databind:2.13.3'
 
     /**
      * Log4J2 - logs assíncronos
@@ -34,7 +34,7 @@ dependencies {
     implementation 'com.lmax:disruptor:3.4.4'
 
     // JPA
-    implementation 'org.hibernate:hibernate-entitymanager:5.6.7.Final'
+    implementation 'org.hibernate:hibernate-entitymanager:5.6.8.Final'
     implementation 'org.hibernate:hibernate-c3p0:5.6.7.Final'
     runtimeOnly 'com.h2database:h2:2.1.212'
 
