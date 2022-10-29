@@ -6,7 +6,7 @@ Configuration:
     Console:
       - name: LogToConsole
         PatternLayout:
-          Pattern: "%d{yyyy-MM-dd HH:mm:ss.SSS} [%-5level] [%t] - %msg - at %c.%M(%F:%L)%n"
+          Pattern: "%d{yyyy-MM-dd HH:mm:ss.SSS} [%-5level] [%-17t] - %msg - at %c.%M(%F:%L)%n"
 
     RollingFile:
       - name: JSON
