@@ -42,7 +42,7 @@ public final class Book {
         if (obj == this) return true;
         if (obj == null || obj.getClass() != this.getClass()) return false;
         var that = (Book) obj;
-        return this.id == that.id &&
+        return Objects.equals(this.id, that.id) &&
                 Objects.equals(this.title, that.title);
     }
 

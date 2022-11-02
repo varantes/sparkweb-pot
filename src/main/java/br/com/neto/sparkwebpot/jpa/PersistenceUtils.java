@@ -2,6 +2,7 @@ package br.com.neto.sparkwebpot.jpa;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.checkerframework.checker.nullness.qual.NonNull;
 import org.hibernate.internal.SessionImpl;
 
 import javax.persistence.EntityManager;
@@ -13,11 +14,10 @@ import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 import java.util.concurrent.atomic.AtomicInteger;
-import java.util.concurrent.atomic.AtomicIntegerArray;
 import java.util.stream.IntStream;
 
 public class PersistenceUtils {
-    private final static EntityManagerFactory entityManagerFactory;
+    private static final EntityManagerFactory entityManagerFactory;
     private static final Logger log = LogManager.getLogger();
     private static final AtomicInteger counter = new AtomicInteger(0);
 
@@ -26,11 +26,12 @@ public class PersistenceUtils {
     }
 
     public static void main(String[] args) {
-//        saveAndList();
-        multiThreadTest();
+        //noinspection ConstantValue
+        if (false) saveAndList();
+        else multiThreadTest();
     }
 
-    protected static void create(EntityManager entityManager, Book book) {
+    protected static void create(@NonNull EntityManager entityManager, Book book) {
         entityManager.getTransaction().begin();
         try {
             entityManager.persist(book);
@@ -41,7 +42,8 @@ public class PersistenceUtils {
         }
     }
 
-    protected static List findAll(EntityManager entityManager) {
+    @SuppressWarnings("rawtypes")
+    protected static List findAll(@NonNull EntityManager entityManager) {
         return entityManager.createQuery("select b from Book b").getResultList();
     }
 
@@ -55,7 +57,7 @@ public class PersistenceUtils {
         create(entityManager, b);
         log.info("After persist: b={}", b);
 
-        List resultList = findAll(entityManager);
+        @SuppressWarnings("rawtypes") List resultList = findAll(entityManager);
         log.info("resultList = {}", resultList);
     }
 
@@ -92,7 +94,7 @@ public class PersistenceUtils {
         var initTime = System.nanoTime();
         var finalTime = initTime;
         var futures = IntStream.range(0, 10)
-                .mapToObj((n) -> CompletableFuture.runAsync(suplier, executor))
+                .mapToObj(n -> CompletableFuture.runAsync(suplier, executor))
                 .toList();
 
         try {

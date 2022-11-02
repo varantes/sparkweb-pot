@@ -10,7 +10,7 @@ import java.util.concurrent.TimeoutException;
 
 public class CompletableFuturePOC {
 
-    private Logger log = LogManager.getLogger();
+    private final static Logger log = LogManager.getLogger();
     private String result;
     private CompletableFuture<Void> heavyOperationFuture;
 

@@ -6,15 +6,13 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.util.Map;
-import java.util.concurrent.atomic.AtomicLong;
 
 import static spark.Spark.*;
 
 public class Router {
 
     private static final Logger log = LogManager.getLogger();
-    private static ThreadLocal<Long> longThreadLocal = new ThreadLocal<>();
-    private static AtomicLong atomicLong = new AtomicLong(0);
+    private static final ThreadLocal<Long> longThreadLocal = new ThreadLocal<>();
 
     private final OneService oneService;
     private final ObjectMapper mapper;
@@ -31,8 +29,8 @@ public class Router {
             log.info("REQUEST {}: {}", req.requestMethod(), req.uri());
         });
 
-        get("/", (req, res) -> "Working" );
-        get("/person", (req, res) -> mapper.writeValueAsString(oneService.getPerson()) );
+        get("/", (req, res) -> "Working");
+        get("/person", (req, res) -> mapper.writeValueAsString(oneService.getPerson()));
         get("/hi", (req, res) -> oneService.sayHi());
 
         after("/*", (req, res) -> {
@@ -42,7 +40,7 @@ public class Router {
             } catch (Exception e) {
                 respBody = res.body();
             }
-            log.info("RESPONSE body={} [after {} ms]", respBody, ((double)(System.nanoTime() - longThreadLocal.get())) / 1000_000);
+            log.info("RESPONSE body={} [after {} ms]", respBody, ((double) (System.nanoTime() - longThreadLocal.get())) / 1000_000);
             longThreadLocal.remove();
         });
     }
